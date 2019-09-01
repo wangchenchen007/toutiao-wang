@@ -26,6 +26,7 @@
 </template>
 
 <script>
+// import { constants } from "crypto";
 export default {
   data () {
     let validator = function (rule, value, callBack) {
@@ -73,11 +74,26 @@ export default {
   },
   methods: {
     login () {
-      this.$refs.loginForm.validate((isOk, obj) => {
+      this.$refs.loginForm.validate(isOk => {
         if (isOk) {
-          this.$message({ type: 'success', message: '成功' })
-        } else {
-          this.$message({ type: 'warning', message: '失败' })
+          this.$axios({
+            url: '/authorizations',
+            // axios 中 data中放置body参数 params是放置地址参数的
+            method: 'post',
+            data: this.loginForm
+          })
+            .then(result => {
+              // console.log(result);
+              // setItem ( '名称'  ,   '值')
+              window.localStorage.setItem('user-token', result.data.data.token)
+              this.$router.push('/')
+            })
+            .catch(() => {
+              this.$message({
+                message: '手机号或者验证码错误',
+                type: 'warning'
+              })
+            })
         }
       })
     }
