@@ -1,9 +1,17 @@
 <template>
   <el-container>
-    <el-aside>左侧</el-aside>
+    <!-- 左侧 -->
+    <el-aside style="width:200px;background-color:#323745">
+      <layout-aside></layout-aside>
+    </el-aside>
+    <!-- 右侧 -->
     <el-container>
-      <el-header>头部</el-header>
-      <el-main>主体</el-main>
+      <!-- 头部 -->
+      <el-header>
+        <layout-header></layout-header>
+      </el-header>
+      <!-- 身体 -->
+      <el-main></el-main>
     </el-container>
   </el-container>
 </template>

@@ -26,14 +26,14 @@
 </template>
 
 <script>
-// import { constants } from "crypto";
 export default {
   data () {
     let validator = function (rule, value, callBack) {
       if (value) {
         callBack() // 如果value为true直接通过
       } else {
-        callBack(new Error('您必须无条件同意被坑'))
+        callBack(new Error('您必须无条件同意'))
+        // callBack(new Error('您必须无条件同意'))
       }
     }
     return {
@@ -50,7 +50,7 @@ export default {
             message: '手机号不能为空'
           },
           {
-            pattern: /^1[3456789]\d{9}$/,
+            pattern: /^1[3456789]\d{9}$/, // 正则表达式
             message: '手机号格式不正确'
           }
         ],
@@ -86,7 +86,8 @@ export default {
               // console.log(result);
               // setItem ( '名称'  ,   '值')
               window.localStorage.setItem('user-token', result.data.data.token)
-              this.$router.push('/')
+              this.$router.push('/home')
+              // this.$router.push('/')
             })
             .catch(() => {
               this.$message({
