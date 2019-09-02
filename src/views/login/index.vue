@@ -85,7 +85,7 @@ export default {
             .then(result => {
               // console.log(result);
               // setItem ( '名称'  ,   '值')
-              window.localStorage.setItem('user-token', result.data.data.token)
+              window.localStorage.setItem('user-token', result.data.data.token) // 设置token值
               this.$router.push('/home')
               // this.$router.push('/')
             })

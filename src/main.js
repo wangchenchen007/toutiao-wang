@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './premission'
 import ElementUI from 'element-ui'
 import Component from './components/index' // 自定义全局组件
 import './assets/style/index.less'
