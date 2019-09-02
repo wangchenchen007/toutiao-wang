@@ -81,20 +81,13 @@ export default {
             // axios 中 data中放置body参数 params是放置地址参数的
             method: 'post',
             data: this.loginForm
+          }).then(result => {
+            // console.log(result);
+            // setItem ( '名称'  ,   '值')
+            window.localStorage.setItem('user-token', result.data.data.token) // 设置token值
+            this.$router.push('/home')
+            // this.$router.push('/')
           })
-            .then(result => {
-              // console.log(result);
-              // setItem ( '名称'  ,   '值')
-              window.localStorage.setItem('user-token', result.data.data.token) // 设置token值
-              this.$router.push('/home')
-              // this.$router.push('/')
-            })
-            .catch(() => {
-              this.$message({
-                message: '手机号或者验证码错误',
-                type: 'warning'
-              })
-            })
         }
       })
     }
