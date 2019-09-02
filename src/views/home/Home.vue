@@ -11,7 +11,7 @@
         <layout-header></layout-header>
       </el-header>
       <!-- 身体 -->
-      <el-main>
+      <el-main style="margin:0;padding:0">
         <router-view></router-view>
       </el-main>
     </el-container>
