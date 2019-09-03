@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <!-- 左侧 -->
-    <el-aside style="width:200px;background-color:#323745">
+    <el-aside style="width:200px;background-color:#323745 ;overflow:hidden">
       <layout-aside></layout-aside>
     </el-aside>
     <!-- 右侧 -->

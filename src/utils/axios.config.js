@@ -50,7 +50,7 @@ function (error) {
     type: 'warning',
     message
   })
-  // return new Promise(function() {})
+  return new Promise(function () {})
 })
 
 export default axios

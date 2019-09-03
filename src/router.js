@@ -13,7 +13,13 @@ export default new Router({
     children: [{
       path: '',
       component: Mine
-    }]
+    },
+    {
+      path: 'comment',
+      component: () =>
+                        import('./views/comment/index.vue')
+    }
+    ]
   },
   {
     path: '/',
