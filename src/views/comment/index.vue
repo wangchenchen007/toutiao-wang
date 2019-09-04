@@ -21,7 +21,14 @@
       </el-table-column>
     </el-table>
     <el-row type="flex" justify="center" style="margin:10px 0">
-      <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+      <el-pagination
+        @current-change="pageChange"
+        :current-page="page.page"
+        :page-size="page.pageSize"
+        :total="page.total"
+        background
+        layout="prev, pager, next"
+      ></el-pagination>
     </el-row>
   </el-card>
 </template>
@@ -30,10 +37,20 @@
 export default {
   data () {
     return {
-      list: []
+      list: [],
+      page: {
+        page: 1,
+        pageSize: 10,
+        total: 0
+      }
     }
   },
   methods: {
+    pageChange (newPage) {
+      this.page.page = newPage
+      this.getComments()
+    },
+
     openOrClose (row) {
       let mess = row.comment_status ? '关闭' : '打开'
       this.$confirm(`您是否要${mess}此状态?`, '提示').then(() => {
@@ -58,11 +75,14 @@ export default {
       this.$axios({
         url: '/articles',
         params: {
-          response_type: 'comment'
+          response_type: 'comment',
+          page: this.page.page,
+          per_page: this.page.pageSize
         }
       }).then(result => {
         // console.log(result.data);
         this.list = result.data.results
+        this.page.total = result.data.total_count
       })
     }
   },
