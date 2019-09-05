@@ -18,6 +18,16 @@ export default new Router({
       path: 'comment',
       component: () =>
                         import('./views/comment/index.vue')
+    },
+    {
+      path: 'material',
+      component: () =>
+                        import('./views/material')
+    },
+    {
+      path: 'articles',
+      component: () =>
+                        import('./views/articles')
     }
     ]
   },
