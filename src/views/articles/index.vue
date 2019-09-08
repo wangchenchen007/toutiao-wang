@@ -43,10 +43,10 @@
           </div>
         </div>
         <div class="right">
-          <span>
+          <span @click="xgItem(item)">
             <i class="el-icon-edit"></i>修改
           </span>
-          <span>
+          <span @click="delItem(item)">
             <i class="el-icon-delete"></i>删除
           </span>
         </div>
@@ -85,6 +85,19 @@ export default {
     }
   },
   methods: {
+    xgItem (item) {
+      this.$router.push(`/home/publish/${item.id.toString()}`)
+    },
+    delItem (item) {
+      this.$confirm('您确定要删除吗?', '重要提示').then(() => {
+        this.$axios({
+          url: `/articles/${item.id.toString()}`,
+          method: 'delete'
+        }).then(() => {
+          this.getConditionArticle()
+        })
+      })
+    },
     changePage (newPage) {
       this.page.page = newPage
       this.getConditionArticle()
