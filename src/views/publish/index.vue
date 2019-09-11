@@ -3,7 +3,7 @@
     <bread-crumb slot="header">
       <template slot="title">发布文章</template>
     </bread-crumb>
-
+    <!-- {{formDate}}} -->
     <el-form
       ref="publishForm"
       :model="formDate"
@@ -15,15 +15,25 @@
         <el-input v-model="formDate.title" style="width:400px"></el-input>
       </el-form-item>
       <el-form-item prop="content" label="内容">
-        <el-input v-model="formDate.content" type="textarea" :rows="10" placeholder="请输入内容"></el-input>
+        <quill-editor
+          style="height:500px; width : 800px"
+          v-model="formDate.content"
+          type="textarea"
+          :rows="10"
+          placeholder="请输入内容"
+        ></quill-editor>
       </el-form-item>
-      <el-form-item label="封面" prop="cover">
-        <el-radio-group v-model="formDate.cover.type">
+      <el-form-item label="封面" prop="cover" style="margin-top:100px">
+        <el-radio-group @change="changeCoverType" v-model="formDate.cover.type">
           <el-radio :label="1">单图</el-radio>
           <el-radio :label="3">三图</el-radio>
           <el-radio :label="0">无图</el-radio>
           <el-radio :label="-1">自动</el-radio>
         </el-radio-group>
+      </el-form-item>
+
+      <el-form-item>
+        <cover-image @onClickimg="receiveImg" :images="formDate.cover.images"></cover-image>
       </el-form-item>
       <el-form-item prop="channel_id" label="频道">
         <el-select v-model="formDate.channel_id" value>
@@ -75,6 +85,20 @@ export default {
     }
   },
   methods: {
+    receiveImg (url, index) {
+      this.formDate.cover.images = this.formDate.cover.images.map((item, i) =>
+        i === index ? url : item
+      )
+    },
+    changeCoverType () {
+      if (this.formDate.cover.type === 1) {
+        this.formDate.cover.images = [''] // 有一张封面 待选择
+      } else if (this.formDate.cover.type === 3) {
+        this.formDate.cover.images = ['', '', ''] // 有三张封面 待选择
+      } else {
+        this.formDate.cover.images = [] // 自动或者无图 没有内容
+      }
+    },
     getChannels () {
       this.$axios({
         url: '/channels'
@@ -109,6 +133,7 @@ export default {
 
   created () {
     this.getChannels()
+
     let { articlesId } = this.$route.params
     if (articlesId) {
       this.getArticalById(articlesId)
